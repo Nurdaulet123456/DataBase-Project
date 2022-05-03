@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Search Page</title>
+
+    <style>
+        html {
+            font-size: 62.35%;
+        }
+
+        body {
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+                "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji",
+                "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+            font-size: 1.6rem;
+            line-height: 1.5;
+            color: #161c2d;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            background: #fff;
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+        }
+
+        :is(h1, h2, h3, h4, h5, h6, p) {
+            margin: 0;
+            padding: 0;
+        }
+
+        ol,
+        li,
+        ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .img {
+            display: block;
+            max-width: 100%;
+        }
+
+        /* Container */
+
+        .container {
+            width: 100%;
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        /* Page */
+
+        .page {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Header */
+
+        .header {
+            width: 100%;
+
+            border-top: 1px solid rgb(190, 190, 190);
+            border-bottom: 1px solid rgb(190, 190, 190);
+
+            position: fixed;
+            top: 0;
+            right: 0;
+            left: 0;
+
+            z-index: 10000;
+
+            margin-top: 30px;
+        }
+
+        .header__inner {
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .header__logo {
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .header__title {
+            font-weight: normal;
+        }
+
+        .header__title>span {
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .nav {
+            display: flex;
+        }
+
+        .nav__link {
+            margin-right: 30px;
+        }
+
+        .nav__link::before,
+        .nav__link::after {
+            content: "";
+            display: block;
+
+            width: 0%;
+            height: 1px;
+
+            background-color: #161c2d;
+
+            transition: width 0.2s linear;
+        }
+
+        .nav__link:hover::before,
+        .nav__link:hover::after {
+            width: 100%;
+        }
+
+        /* Main */
+
+        .main {
+            padding-top: 200px;
+            height: 800px;
+        }
+
+        .main__block {
+            width: calc(100% - 16.1px);
+            max-width: calc(100% - 16.1px);
+            height: 500px;
+            background-color: #f5b8e4;
+            padding: 32px 56px 32px 112px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: space-between;
+
+            border-radius: 5px;
+        }
+
+        .main__title {
+            color: #2d2f43;
+            font-size: 40px;
+            font-weight: 500;
+            line-height: 48px;
+        }
+
+        .main__subtitle {
+            max-height: 56px;
+            font-size: 24px;
+            line-height: 28px;
+            margin-top: 16px;
+            color: #2d2f43;
+        }
+
+        .main__img img {
+            transition: transform 0.2s linear;
+        }
+
+        .main__img img:hover {
+            transform: scale(1.2);
+        }
+
+        /* Section */
+
+        .section__title {
+            font-weight: 500;
+            font-size: 4rem;
+            color: #161c2d;
+
+            margin-bottom: 20px;
+        }
+
+        form {
+            margin-bottom: 70px;
+        }
+
+        form .input {
+            width: 100%;
+            max-width: 350px;
+            padding: 15px 20px;
+
+            background-color: rgb(248, 248, 248);
+            border: none;
+            border-radius: 4px;
+
+            font-size: 14px;
+
+            margin-right: 10px;
+        }
+
+        .input:focus {
+            outline: none;
+        }
+
+        .input::placeholder {
+            color: black;
+            font-size: 14px;
+        }
+
+        .btn {
+            display: inline-block;
+            width: 150px;
+            background-color: #fc7474;
+            border: none;
+            color: white;
+
+            border-radius: 5px;
+
+            padding: 10px 15px;
+
+            font-weight: bold;
+
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        /* Result */
+
+        .result__title {
+            font-weight: 500;
+            font-size: 30px;
+            margin-bottom: 20px;
+        }
+
+        .result img {
+            border-radius: 10px;
+        }
+
+        .before {
+            width: 250px;
+            position: relative !important;
+        }
+
+        .id {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 70px;
+            height: 50px;
+            background-color: #fc7474;
+
+            position: absolute;
+            top: 0;
+            right: 0;
+
+            border-top-right-radius: 10px;
+
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .result__img {
+            width: 250px;
+            position: relative !important;
+        }
+
+        .result_article {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 100px;
+            height: 30px;
+            background-color: #fc7474;
+
+            position: absolute;
+            bottom: 0;
+            right: 0;
+
+            border-bottom-right-radius: 10px;
+
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .hired__date {
+            width: 100%;
+            max-width: 250px;
+
+            padding: 15px 20px;
+
+            font-size: 18px;
+
+            background: rgb(248, 248, 248);
+            border-radius: 5px;
+
+            color: black;
+            font-weight: bold;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .input__result {
+            margin-bottom: 15px;
+            margin-left: 20px;
+
+            font-weight: bold;
+        }
+
+        .section__table {
+            padding-top: 50px;
+        }
+
+        /* Table */
+
+        .responsive-table li {
+            border-radius: 3px;
+            padding: 25px 30px;
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 25px;
+        }
+
+        .responsive-table .table-header {
+            background-color: #95a5a6;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+        }
+
+        .responsive-table .table-row {
+            background-color: #fff;
+            box-shadow: 0px 0px 9px 0px rgba(0, 0, 0, 0.1);
+        }
+
+        .responsive-table .col-1 {
+            flex-basis: 10%;
+        }
+
+        .responsive-table .col-2 {
+            flex-basis: 40%;
+        }
+
+        .responsive-table .col-3 {
+            flex-basis: 25%;
+        }
+
+        .responsive-table .col-4 {
+            flex-basis: 25%;
+        }
+
+        .table-header {
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        .discount {
+            position: relative !important;
+            margin-bottom: 30px;
+        }
+
+        .table__btn {
+            position: absolute;
+            right: 0;
+        }
+
+        .search__btn {
+            display: inline-block;
+            border: none;
+            border-radius: 5px;
+            background-color: #fc7474;
+
+            padding: 12px 50px;
+
+            color: white;
+
+            font-size: 16px;
+            letter-spacing: 2px;
+            font-weight: bold;
+
+            cursor: pointer;
+        }
+
+        .custom-select {
+            position: relative;
+            font-family: Arial;
+        }
+
+        .custom-select select {
+            display: none;
+        }
+
+        .select-selected {
+            background-color: rgb(248, 248, 248);
+        }
+
+        .select-selected:after {
+            position: absolute;
+            content: "";
+            top: 14px;
+            right: -80px;
+            width: 0;
+            height: 0;
+            border: 6px solid transparent;
+            border-color: #000 transparent transparent transparent;
+        }
+
+        .select-selected.select-arrow-active:after {
+            border-color: transparent transparent #000 transparent;
+            top: 7px;
+        }
+
+        .select-items div,
+        .select-selected {
+            border-radius: 5px;
+            color: #000000;
+            width: 300px;
+            padding: 10px 16px;
+            border: 1px solid transparent;
+            border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent;
+            cursor: pointer;
+        }
+
+        .select-items {
+            position: absolute;
+            border-radius: 5px;
+            min-width: 300px;
+            margin-right: 30px;
+            background-color: rgb(248, 248, 248);
+            top: 100%;
+            left: 0;
+            right: 0;
+            z-index: 99;
+        }
+
+        .select-hide {
+            display: none;
+        }
+
+        .select-items div:hover,
+        .same-as-selected {
+            background-color: rgba(0, 0, 0, 0.1);
+        }
+
+        .search__input {
+            margin-left: 100px;
+        }
+
+        .form {
+            position: relative;
+        }
+
+        .search__btn {
+            position: absolute;
+            right: 0;
+        }
+
+        /* Search Result */
+
+        .result {
+            display: flex;
+            flex-wrap: wrap;
+
+            margin: 0 auto;
+        }
+
+        /* Result Block */
+
+        .result__block {
+            width: 25%;
+            max-width: 340px;
+            margin-bottom: 20px;
+            margin-right: 10px;
+        }
+
+        .result__img {
+            margin: 0 auto;
+            margin-bottom: 20px;
+        }
+
+        .result__img img {
+            display: block;
+            width: 100%;
+        }
+
+        /* Price */
+
+        .price {
+            display: flex;
+            align-items: center;
+            justify-content: space-evenly;
+            margin-bottom: 10px;
+        }
+
+        .kzt {
+            border-radius: 2px;
+
+            padding: 5px 20px;
+            background-color: rgb(248, 248, 248);
+
+            font-weight: bold;
+
+            transition: background-color 0.2s linear;
+
+            cursor: pointer;
+        }
+
+        .kzt:hover {
+            background-color: rgb(223, 223, 223);
+        }
+
+        .discription {
+            margin: 0 auto;
+
+            border-radius: 5px;
+
+            background-color: rgb(248, 248, 248);
+
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        .discription p {
+            text-align: center;
+
+            font-size: 15px;
+            font-weight: 500;
+        }
+
+        .dis_btn {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: flex-end;
+        }
+
+        /* Login */
+
+        .login {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .login_form {
+            width: 100%;
+            max-width: 400px;
+            padding: 20px 30px;
+
+            background: #e36683;
+        }
+
+        .login_form h1 {
+            text-align: center;
+            color: white;
+        }
+
+        .login_input {
+            width: 100%;
+            padding: 10px 20px;
+            margin-bottom: 20px;
+
+            border: none;
+            color: white;
+            background-color: transparent;
+
+            border-bottom: 1px solid white;
+
+            transition: border 0.2s linear;
+        }
+
+        .login_input:focus {
+            outline: none;
+
+            border-bottom-width: 5px;
+        }
+
+        .login_input::placeholder {
+            color: white;
+            font-size: 15px;
+        }
+
+        .login_btn {
+            display: inline-block;
+            border: none;
+            background-color: #b30000;
+
+            width: 100%;
+            padding: 13px;
+            border-radius: 5px;
+
+            color: white;
+
+            font-weight: bold;
+            letter-spacing: 2px;
+            font-size: 16px;
+
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Page -->
+    <div class="page">
+
+        <!-- Header -->
+
+        <header class="header">
+            <div class="container">
+                <div class="header__inner">
+                    <h1 class="header__title">Season - <span>SS 22-23</span></h1>
+                    <nav class="nav">
+                        <a href="#" class="nav__link">Men</a>
+                        <a href="#" class="nav__link">Women</a>
+                        <a href="index.html" class="nav__link" style="margin-right: 0;">STUFF</a>
+                    </nav>
+
+                    <div class="header__logo" style="display: flex; align-items: center;">
+                        <h1>ZARA</h1>
+                        <a class="nav__link" href="login.html" style="margin-left:25px;">Login</a>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+
+        <!-- Search -->
+        <div class="main">
+            <div class="container">
+
+                <div class="search" style="background-color: rgb(248, 190, 201); padding: 100px; border-radius: 5px;">
+                    <h1 class="section__title">Search:</h1>
+                    <form class="form" action="/" method="post"
+                        style="display: flex; align-items: center; flex-wrap: wrap;">
+                        <div class="inputs" style="margin-bottom: 20px; margin-right: 40px;">
+                            <h2 style="margin-bottom: 20px;">Type: </h2>
+                            <div class="custom-select" style="width:200px;">
+                                <select>
+                                    <option value="0">Select car:</option>
+                                    <option value="1">T-Shirt</option>
+                                    <option value="2">s</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="inputs" style="margin-bottom: 20px; margin-right: 40px;">
+                            <h2 style="margin-bottom: 20px;">A-Code: </h2>
+                            <input class="input search__input" type="text" placeholder="Write your code....">
+                        </div>
+
+                        <div>
+                            <button class="search__btn" style="margin-bottom: 0;">Search</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+
+        <!-- Search Result -->
+
+        <section class="section">
+            <div class="container">
+                <h1 class="section__title">Search Result: </h1>
+
+                <div class="result">
+                    <div class="result__block">
+                        <div class="result__img">
+                            <img class="img" src="https://via.placeholder.com/250x250" alt="Result IMG">
+                            <div class="result_article">article</div>
+                        </div>
+
+                        <div class="price">
+                            <div class="kzt"><a>KZT</a></div>
+                            <div class="kzt"><a>RUB</a></div>
+                            <div class="kzt"><a>USD</a></div>
+                        </div>
+
+                        <div class="discription">
+                            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+                                Amet maxime et nostrum nulla corrupti molestias cupiditate officiis
+                                temporibus? Amet quo adipisci eveniet excepturi pariatur culpa quisquam
+                                eos numquam molestiae eligendi.</p>
+                        </div>
+
+                        <div class="dis_btn">
+                            <button class="btn">madin</button>
+                        </div>
+                    </div>
+
+                    <div class="result__block">
+                        <div class="result__img">
+                            <img class="img" src="https://via.placeholder.com/250x250" alt="Result IMG">
+                            <div class="result_article">article</div>
+                        </div>
+
+                        <div class="price">
+                            <div class="kzt"><a>KZT</a></div>
+                            <div class="kzt"><a>RUB</a></div>
+                            <div class="kzt"><a>USD</a></div>
+                        </div>
+
+                        <div class="discription">
+                            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+                                Amet maxime et nostrum nulla corrupti molestias cupiditate officiis
+                                temporibus? Amet quo adipisci eveniet excepturi pariatur culpa quisquam
+                                eos numquam molestiae eligendi.</p>
+                        </div>
+
+                        <div class="dis_btn">
+                            <button class="btn">madin</button>
+                        </div>
+                    </div>
+
+                    <div class="result__block">
+                        <div class="result__img">
+                            <img class="img" src="https://via.placeholder.com/250x250" alt="Result IMG">
+                            <div class="result_article">article</div>
+                        </div>
+
+                        <div class="price">
+                            <div class="kzt"><a>KZT</a></div>
+                            <div class="kzt"><a>RUB</a></div>
+                            <div class="kzt"><a>USD</a></div>
+                        </div>
+
+                        <div class="discription">
+                            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+                                Amet maxime et nostrum nulla corrupti molestias cupiditate officiis
+                                temporibus? Amet quo adipisci eveniet excepturi pariatur culpa quisquam
+                                eos numquam molestiae eligendi.</p>
+                        </div>
+
+                        <div class="dis_btn">
+                            <button class="btn">madin</button>
+                        </div>
+                    </div>
+
+                    <div class="result__block">
+                        <div class="result__img">
+                            <img class="img" src="https://via.placeholder.com/250x250" alt="Result IMG">
+                            <div class="result_article">article</div>
+                        </div>
+
+                        <div class="price">
+                            <div class="kzt"><a>KZT</a></div>
+                            <div class="kzt"><a>RUB</a></div>
+                            <div class="kzt"><a>USD</a></div>
+                        </div>
+
+                        <div class="discription">
+                            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+                                Amet maxime et nostrum nulla corrupti molestias cupiditate officiis
+                                temporibus? Amet quo adipisci eveniet excepturi pariatur culpa quisquam
+                                eos numquam molestiae eligendi.</p>
+                        </div>
+
+                        <div class="dis_btn">
+                            <button class="btn">madin</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <script type="text/javascript">
+        let x, i, j, l, ll, selElmnt, a, b, c;
+        x = document.getElementsByClassName("custom-select");
+        l = x.length;
+        for (i = 0; i < l; i++) {
+            selElmnt = x[i].getElementsByTagName("select")[0];
+            ll = selElmnt.length;
+            a = document.createElement("DIV");
+            a.setAttribute("class", "select-selected");
+            a.innerHTML = selElmnt.options[selElmnt.selectedIndex].innerHTML;
+            x[i].appendChild(a);
+            b = document.createElement("DIV");
+            b.setAttribute("class", "select-items select-hide");
+            for (j = 1; j < ll; j++) {
+                c = document.createElement("DIV");
+                c.innerHTML = selElmnt.options[j].innerHTML;
+                c.addEventListener("click", function (e) {
+                    let y, i, k, s, h, sl, yl;
+                    s = this.parentNode.parentNode.getElementsByTagName("select")[0];
+                    sl = s.length;
+                    h = this.parentNode.previousSibling;
+                    for (i = 0; i < sl; i++) {
+                        if (s.options[i].innerHTML == this.innerHTML) {
+                            s.selectedIndex = i;
+                            h.innerHTML = this.innerHTML;
+                            y = this.parentNode.getElementsByClassName("same-as-selected");
+                            yl = y.length;
+                            for (k = 0; k < yl; k++) {
+                                y[k].removeAttribute("class");
+                            }
+                            this.setAttribute("class", "same-as-selected");
+                            break;
+                        }
+                    }
+                    h.click();
+                });
+                b.appendChild(c);
+            }
+            x[i].appendChild(b);
+            a.addEventListener("click", function (e) {
+                e.stopPropagation();
+                closeAllSelect(this);
+                this.nextSibling.classList.toggle("select-hide");
+                this.classList.toggle("select-arrow-active");
+            });
+        }
+
+        function closeAllSelect(elmnt) {
+            let x, y, i, xl, yl, arrNo = [];
+            x = document.getElementsByClassName("select-items");
+            y = document.getElementsByClassName("select-selected");
+            xl = x.length;
+            yl = y.length;
+            for (i = 0; i < yl; i++) {
+                if (elmnt == y[i]) {
+                    arrNo.push(i)
+                } else {
+                    y[i].classList.remove("select-arrow-active");
+                }
+            }
+            for (i = 0; i < xl; i++) {
+                if (arrNo.indexOf(i)) {
+                    x[i].classList.add("select-hide");
+                }
+            }
+        }
+        document.addEventListener("click", closeAllSelect);
+    </script>
+</body>
+
+</html>

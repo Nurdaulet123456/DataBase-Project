@@ -13,3 +13,9 @@ class Doctor(models.Model):
 
 class Product(models.Model):
     change = models.CharField(max_length=100)
+
+class Shop(models.Model):
+    shop = models.CharField(max_length=100)
+
+    def __str__(self) -> str:
+        return self.shop
