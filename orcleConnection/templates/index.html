@@ -1,4 +1,3 @@
-{% load static %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -7,12 +6,15 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    
     <title>Stuff is site</title>
 
     <style>
         html {
             font-size: 62.35%;
+            /* scroll-behavior: smooth; */
         }
 
         body {
@@ -636,11 +638,11 @@
                 <div class="header__inner">
                     <h1 class="header__title">For <span>STUFF</span></h1>
                     <nav class="nav">
-                        <a href="#" class="nav__link">Consultends</a>
-                        <a href="#" class="nav__link">Discounts</a>
-                        <a href="#" class="nav__link">Banks</a>
+                        <a href="#consultends" class="nav__link">Consultends</a>
+                        <a href="#discount" class="nav__link">Discounts</a>
+                        <a href="#banks" class="nav__link">Banks</a>
                         <a href="#" class="nav__link">Products</a>
-                        <a href="search.html" class="nav__link" style="margin-right: 0;">Search</a>
+                        <a href="{% url 'search' %}" class="nav__link" style="margin-right: 0;">Search</a>
                     </nav>
 
                     <div class="header__logo">
@@ -657,13 +659,19 @@
                 <div class="main__inner">
                     <div class="main__block">
                         <div class="main__text">
-                            <div class="main__title">Gift with a purchase</div>
-                            <div class="main__subtitle">Fashion brands</div>
+                            <div 
+                            class="main__title" 
+                            data-aos="fade-right">Gift with a purchase</div>
+                            <div 
+                            class="main__subtitle" 
+                            data-aos="fade-up"
+                            data-aos-delay="100">Fashion brands</div>
                         </div>
 
                         <div class="main__img">
                             <img class="img" width="300" src="https://via.placeholder.com/300x300"
-                                alt="Desktop image">
+                                alt="Desktop image"
+                                data-aos="fade-left">
                         </div>
                     </div>
                 </div>
@@ -673,12 +681,12 @@
 
         <!-- Consultends -->
 
-        <section class="section">
+        <section class="section" id="consultends">
             <div class="container">
-                <h1 class="section__title">Consultends</h1>
+                <h1 class="section__title" data-aos="fade-right">Consultends</h1>
 
                 <div class="consultends">
-                    <form action="/" method="POST">
+                    <form action="/" method="POST" data-aos="fade-up" data-aos-delay="100">
                         <input class="input" type="text" name="name" placeholder="Name of the consultent...">
                         <input class="input" type="text" name="id" placeholder="ID...">
 
@@ -727,7 +735,7 @@
 
         <!-- Discount -->
 
-        <section class="section section__table">
+        <section class="section section__table" id="discount">
             <div class="container">
 
                 <h1 class="section__title">Discount</h1>
@@ -758,7 +766,7 @@
 
         <!-- Banks -->
 
-        <section class="section section__table">
+        <section class="section section__table" id="banks">
             <div class="container">
 
                 <h1 class="section__title">Banks</h1>
@@ -784,6 +792,55 @@
             </div>
         </section>
     </div>
+
+
+
+    <!-- Script -->
+
+
+    <script type="text/javascript">
+        let links = document.querySelectorAll('.nav__link')
+
+        console.log(links)
+
+        for (let link of links) {
+            link.addEventListener('click', clickSmooth)
+        }
+
+        function clickSmooth(e) {
+            e.preventDefault();
+
+            const href = this.getAttribute('href');
+
+            document.querySelector(href).scrollIntoView({
+                behavior: 'smooth'
+            })
+        }
+    </script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+    <script>
+        AOS.init({
+        disable: 'mobile',
+        startEvent: 'DOMContentLoaded',
+        initClassName: 'aos-init',
+        animatedClassName: 'aos-animate',
+        useClassNames: false, 
+        disableMutationObserver: false,
+        debounceDelay: 50, 
+        throttleDelay: 99,
+
+        offset: 120, 
+        delay: 0, 
+        duration: 700, 
+        easing: 'ease', 
+        once: false, 
+        mirror: false, 
+        anchorPlacement: 'top-bottom', 
+});
+    </script>
 
 </body>
 

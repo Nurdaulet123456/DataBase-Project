@@ -38,5 +38,5 @@ class Product_Types(models.Model):
     image = models.ImageField(default="https://via.placeholder.com/300x300")
 
 
-
+# class 
 
