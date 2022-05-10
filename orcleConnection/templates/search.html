@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <title>Search Page</title>
-
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <style>
         html {
             font-size: 62.35%;
@@ -634,12 +634,12 @@
                     <nav class="nav">
                         <a href="#" class="nav__link">Men</a>
                         <a href="#" class="nav__link">Women</a>
-                        <a href="index.html" class="nav__link" style="margin-right: 0;">STUFF</a>
+                        <a href="{% url 'index' %}" class="nav__link" style="margin-right: 0;">STUFF</a>
                     </nav>
 
                     <div class="header__logo" style="display: flex; align-items: center;">
                         <h1>ZARA</h1>
-                        <a class="nav__link" href="login.html" style="margin-left:25px;">Login</a>
+                        <a class="nav__link" href="{% url 'login' %}" style="margin-left:25px;">Login</a>
                     </div>
                 </div>
             </div>
@@ -651,7 +651,7 @@
             <div class="container">
 
                 <div class="search" style="background-color: rgb(248, 190, 201); padding: 100px; border-radius: 5px;">
-                    <h1 class="section__title">Search:</h1>
+                    <h1 class="section__title" data-aos="fade-right">Search:</h1>
                     <form class="form" action="/" method="post"
                         style="display: flex; align-items: center; flex-wrap: wrap;">
                         <div class="inputs" style="margin-bottom: 20px; margin-right: 40px;">
@@ -671,7 +671,7 @@
                         </div>
 
                         <div>
-                            <button class="search__btn" style="margin-bottom: 0;">Search</button>
+                            <button class="search__btn" style="margin-bottom: 0;" data-aos="fade-left">Search</button>
                         </div>
                     </form>
                 </div>
@@ -694,12 +694,12 @@
                         </div>
 
                         <div class="price">
-                            <div class="kzt"><a>KZT</a></div>
-                            <div class="kzt"><a>RUB</a></div>
-                            <div class="kzt"><a>USD</a></div>
+                            <div class="kzt" data-aos="fade-up"><a>KZT</a></div>
+                            <div class="kzt" data-aos="fade-up" data-aos-delay="100"><a>RUB</a></div>
+                            <div class="kzt" data-aos="fade-up" data-aos-delay="200"><a>USD</a></div>
                         </div>
 
-                        <div class="discription">
+                        <div class="discription" data-aos="fade-up" data-aos-delay="350">
                             <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit.
                                 Amet maxime et nostrum nulla corrupti molestias cupiditate officiis
                                 temporibus? Amet quo adipisci eveniet excepturi pariatur culpa quisquam
@@ -855,6 +855,31 @@
             }
         }
         document.addEventListener("click", closeAllSelect);
+    </script>
+
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+    <script>
+        AOS.init({
+        disable: 'mobile',
+        startEvent: 'DOMContentLoaded',
+        initClassName: 'aos-init',
+        animatedClassName: 'aos-animate',
+        useClassNames: false, 
+        disableMutationObserver: false,
+        debounceDelay: 50, 
+        throttleDelay: 99,
+
+        offset: 120, 
+        delay: 0, 
+        duration: 700, 
+        easing: 'ease', 
+        once: false, 
+        mirror: false, 
+        anchorPlacement: 'top-bottom', 
+    });
     </script>
 </body>
 
