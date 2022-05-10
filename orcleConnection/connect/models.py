@@ -63,7 +63,7 @@ class Customers_Purchase(models.Model):
     total_sum = models.IntegerField()
 
 class Purchases(models.Model):
-    purchase = models.ForeignKey(Customers_Purchase, on_delete=models.CASCADE)
+    purchase_id = models.IntegerField()
     article = models.ForeignKey(Articles, on_delete=models.PROTECT)
     sizes = models.CharField(max_length=5)
     amount = models.IntegerField()
