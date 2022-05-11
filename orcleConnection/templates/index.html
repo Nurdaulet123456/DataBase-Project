@@ -638,7 +638,7 @@
                 <div class="header__inner">
                     <h1 class="header__title">For <span>STUFF</span></h1>
                     <nav class="nav">
-                        <a href="#consultends" class="nav__link">Consultends</a>
+                        <a href="#consultends" class="nav__link">Consultants</a>
                         <a href="#discount" class="nav__link">Discounts</a>
                         <a href="#banks" class="nav__link">Banks</a>
                         <a href="#" class="nav__link">Products</a>
@@ -683,7 +683,7 @@
 
         <section class="section" id="consultends">
             <div class="container">
-                <h1 class="section__title" data-aos="fade-right">Consultends</h1>
+                <h1 class="section__title" data-aos="fade-right">Consultants</h1>
 
                 <div class="consultends">
                     <form action="/" method="POST" data-aos="fade-up" data-aos-delay="100">
@@ -746,16 +746,13 @@
                             <div class="col col-2">Percent</div>
                             <div class="col col-3">Starter Sum</div>
                         </li>
+                        {% for d in discounts %}
                         <li class="table-row">
-                            <div class="col col-1" data-label="Job Id">SW</div>
-                            <div class="col col-2" data-label="Customer Name">15%</div>
-                            <div class="col col-3" data-label="Amount">160.000</div>
+                            <div class="col col-1" data-label="Job Id">{{d.discount_id}}</div>
+                            <div class="col col-2" data-label="Customer Name">{{d.percent}}</div>
+                            <div class="col col-3" data-label="Amount">{{d.starter_sum}}</div>
                         </li>
-                        <li class="table-row">
-                            <div class="col col-1" data-label="Job Id">KT</div>
-                            <div class="col col-2" data-label="Customer Name">20%</div>
-                            <div class="col col-3" data-label="Amount">230.000</div>
-                        </li>
+                        {% endfor %}
                     </ul>
                     <button class="btn table__btn">Edit</button>
                 </div>
@@ -777,16 +774,13 @@
                             <div class="col col-2">Comissions</div>
                             <div class="col col-3">Total transactions</div>
                         </li>
+                        {% for bank in banks %}
                         <li class="table-row">
-                            <div class="col col-1" data-label="Job Id">Kaspi KZ</div>
-                            <div class="col col-2" data-label="Customer Name">2%</div>
-                            <div class="col col-3" data-label="Amount">160.000</div>
+                            <div class="col col-1" data-label="Job Id">{{bank.bank_name}}</div>
+                            <div class="col col-2" data-label="Customer Name">{{bank.bank_commission_percent}}%</div>
+                            <div class="col col-3" data-label="Amount">{{bank.total_transactions}}</div>
                         </li>
-                        <li class="table-row">
-                            <div class="col col-1" data-label="Job Id">Home bank</div>
-                            <div class="col col-2" data-label="Customer Name">20%</div>
-                            <div class="col col-3" data-label="Amount">230.000</div>
-                        </li>
+                        {% endfor %}
                     </ul>
                 </div>
             </div>
