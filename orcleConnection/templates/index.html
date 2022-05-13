@@ -1,4 +1,4 @@
-
+{%load static%}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css">
     <title>Stuff is site</title>
 
     <style>
@@ -324,8 +324,6 @@
 
         .input__result {
             margin-bottom: 15px;
-            margin-left: 20px;
-
             font-weight: bold;
         }
 
@@ -340,7 +338,7 @@
             padding: 25px 30px;
             display: flex;
             justify-content: space-between;
-            margin-bottom: 25px;
+            margin-bottom: 10px;
         }
 
         .responsive-table .table-header {
@@ -355,25 +353,27 @@
             box-shadow: 0px 0px 9px 0px rgba(0, 0, 0, 0.1);
         }
 
-        .responsive-table .col-1 {
-            flex-basis: 10%;
-        }
+<!--        .responsive-table .col-1 {-->
+<!--            flex-basis: 10%;-->
+<!--        }-->
 
-        .responsive-table .col-2 {
-            flex-basis: 40%;
-        }
+<!--        .responsive-table .col-2 {-->
+<!--            flex-basis: 20%;-->
+<!--        }-->
 
-        .responsive-table .col-3 {
-            flex-basis: 25%;
-        }
+<!--        .responsive-table .col-3 {-->
+<!--            flex-basis: 25%;-->
+<!--        }-->
 
-        .responsive-table .col-4 {
-            flex-basis: 25%;
-        }
+<!--        .responsive-table .col-4 {-->
+<!--            flex-basis: 25%;-->
+<!--        }-->
 
         .table-header {
             font-size: 25px;
             font-weight: bold;
+            display: flex!important;
+            justify-content: space-between;
         }
 
         .discount {
@@ -482,7 +482,8 @@
         .result {
             display: flex;
             flex-wrap: wrap;
-
+            flex-direction:column;
+            align-items:center;
             margin: 0 auto;
         }
 
@@ -641,8 +642,7 @@
                         <a href="#consultends" class="nav__link">Consultants</a>
                         <a href="#discount" class="nav__link">Discounts</a>
                         <a href="#banks" class="nav__link">Banks</a>
-                        <a href="#" class="nav__link">Products</a>
-                        <a href="{% url 'search' %}" class="nav__link" style="margin-right: 0;">Search</a>
+                        <a href="{% url 'products' %}" class="nav__link" style="margin-right: 0;">Products</a>
                     </nav>
 
                     <div class="header__logo">
@@ -669,7 +669,7 @@
                         </div>
 
                         <div class="main__img">
-                            <img class="img" width="300" src="https://via.placeholder.com/300x300"
+                            <img class="img" width="300" src="{% static 'img/design.png' %}"
                                 alt="Desktop image"
                                 data-aos="fade-left">
                         </div>
@@ -685,53 +685,58 @@
             <div class="container">
                 <h1 class="section__title" data-aos="fade-right">Consultants</h1>
 
-                <div class="consultends">
-                    <form action="/" method="POST" data-aos="fade-up" data-aos-delay="100">
-                        <input class="input" type="text" name="name" placeholder="Name of the consultent...">
-                        <input class="input" type="text" name="id" placeholder="ID...">
-
+                <div class="consultends" >
+                    <form action="{% url 'index' %}" method="POST" data-aos="fade-up" data-aos-delay="100">
+                        {% csrf_token %}
+                        <input class="input" type="text" name="name" value = "{{searched_name}}" placeholder="Name of the consultant...">
                         <button class="btn" type="submit">Search</button>
                     </form>
 
-                    <div class="search">
+                    <div class="search" >
                         <h3 class="result__title">Result:</h3>
-                        <div class="result" style="display: flex;">
+                        {% if messages %}
+                           {% for message in messages %}
+                             <div class = "alert alert-{{ message.tags }}">{{ message }}</div>
+                           {% endfor %}
+                        {% endif %}
+                        {% if searched_name %}
+                        {% if consultants %}
+                        <div style="display: flex;flex-direction:row" class="col">
+                        {% for consultant in consultants %}
+                        <div class="result">
                             <div class="before">
-                                <img class="img" src="https://via.placeholder.com/250x250" alt="">
-                                <div class="id">1</div>
+                                <img class="img" src="{{consultant.image.url}}" alt="">
+                                <div class="id"> {{consultant.id}} </div>
                             </div>
-
-                            <form action="/" method="post">
+                            <form action="{%url 'delete' consultant.name %}" method="POST">
+                                {% csrf_token %}
                                 <div>
-                                    <input class="input input__result" type="text" name="name" value="Nurdaulet"
-                                        readonly>
+                                    <input class="input input__result" type="text" name="name" value="{{consultant.name}}">
                                 </div>
 
                                 <div>
-                                    <input class="input input__result" type="text" name="surname" value="Toregaliyev"
-                                        readonly>
+                                    <input class="input input__result" type="text" name="surname" value="{{consultant.surname}}">
                                 </div>
 
                                 <div>
-                                    <input class="input input__result" type="text" value="200" readonly>
+                                    <input class="input input__result" type="text" name="sales_sum" value="{{consultant.sales_sum}}">
                                 </div>
-
-                                <div>
-                                    <input class="input input__result" type="text" value="Male" readonly
-                                        style="margin-bottom: 0;">
+                                <div style="display: flex; align-items: center;">
+                                    <button type = "submit" name = "deleteButton" class="btn btn__delete" style="margin-right: 10px; margin-left: 10px;">Delete</button>
+                                    <button type = "submit" name = "editButton" class="btn">Save</button>
                                 </div>
                             </form>
-                        </div>
-
-                        <div style="display: flex; align-items: center;">
-                            <button class="btn" style="margin-right: 10px; margin-left: 10px;">Delete</button>
-                            <button class="btn">Edit</button>
+                            </div>
+                            {% endfor %}
+                            {% else %}
+                            <h3>No such result</h3>
+                            {% endif %}
+                            {% endif %}
                         </div>
                     </div>
                 </div>
             </div>
         </section>
-
 
         <!-- Discount -->
 
@@ -741,20 +746,31 @@
                 <h1 class="section__title">Discount</h1>
                 <div class="discount">
                     <ul class="responsive-table">
-                        <li class="table-header">
-                            <div class="col col-1">ID</div>
-                            <div class="col col-2">Percent</div>
-                            <div class="col col-3">Starter Sum</div>
+                        <li class="table-header" style="display: flex; justify-content: space-between;">
+                            <div>ID</div>
+                            <div>Percent</div>
+                            <div>Starter Sum</div>
                         </li>
                         {% for d in discounts %}
+                        <form action="{% url 'edit_discounts'%}" method = "POST">
+                            {%csrf_token%}
                         <li class="table-row">
-                            <div class="col col-1" data-label="Job Id">{{d.discount_id}}</div>
-                            <div class="col col-2" data-label="Customer Name">{{d.percent}}</div>
-                            <div class="col col-3" data-label="Amount">{{d.starter_sum}}</div>
+                            <div>
+                                    <input class="input" type="text" name = "id" value = "{{d.discount_id}}" readonly>
+                            </div>
+                            <div>
+                                    <input class="input" type="text" name = "percent" value = "{{d.percent}}">
+                            </div>
+                            <div>
+                                    <input class="input" type="text" name = "starter_sum" value = "{{d.starter_sum}}">
+                            </div>
                         </li>
+
+                            <button type = "submit" class="btn table__btn" name="edit">Edit</button>
+                        </form>
                         {% endfor %}
                     </ul>
-                    <button class="btn table__btn">Edit</button>
+
                 </div>
             </div>
         </section>
@@ -793,6 +809,10 @@
 
 
     <script type="text/javascript">
+
+
+
+
         let links = document.querySelectorAll('.nav__link')
 
         console.log(links)
@@ -810,6 +830,13 @@
                 behavior: 'smooth'
             })
         }
+
+
+<!--         document.querySelector('.btn').addEventListener('click', (e) => {-->
+<!--               e.preventDefault();-->
+<!--        })-->
+
+
     </script>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>

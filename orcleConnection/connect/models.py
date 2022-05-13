@@ -16,10 +16,12 @@ class Other_offices(models.Model):
 
 
 class Discounts(models.Model):
+    gender_choices = (('M', 'Male'),
+                      ('F', 'Female'))
     discount_id = models.CharField(max_length=100)
     percent = models.FloatField()
     starter_sum = models.IntegerField()
-
+    gender = models.CharField(choices=gender_choices, max_length=2, default='M')
 
 class Consultants(models.Model):
     name = models.CharField(max_length=100)

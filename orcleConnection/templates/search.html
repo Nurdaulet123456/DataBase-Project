@@ -617,6 +617,20 @@
 
             cursor: pointer;
         }
+
+        .discription {
+            position: relative;
+        }
+
+        .discription > span {
+            position: absolute;
+            right: 15px;
+        }
+
+
+        .result__block {
+        margin-bottom: 100px;
+        }
     </style>
 </head>
 
@@ -652,26 +666,31 @@
 
                 <div class="search" style="background-color: rgb(248, 190, 201); padding: 100px; border-radius: 5px;">
                     <h1 class="section__title" data-aos="fade-right">Search:</h1>
-                    <form class="form" action="/" method="post"
-                        style="display: flex; align-items: center; flex-wrap: wrap;">
+                    <form class="form" action="{% url 'products' %}" method="post" style="display: flex; align-items: center; flex-wrap: wrap;">
+                        {%csrf_token%}
                         <div class="inputs" style="margin-bottom: 20px; margin-right: 40px;">
                             <h2 style="margin-bottom: 20px;">Type: </h2>
                             <div class="custom-select" style="width:200px;">
-                                <select>
-                                    <option value="0">Select car:</option>
-                                    <option value="1">T-Shirt</option>
-                                    <option value="2">s</option>
+                                <select name="types">
+                                    {% if type %}
+                                    <option value="0">{{type}}</option>
+                                    {% else %}
+                                    <option value="0">Select type of the product:</option>
+                                    {% endif %}
+                                    {% for product in products %}
+                                    <option value="{{product.id}}">{{product.type_name}}</option>
+                                    {% endfor %}
                                 </select>
                             </div>
                         </div>
 
                         <div class="inputs" style="margin-bottom: 20px; margin-right: 40px;">
                             <h2 style="margin-bottom: 20px;">A-Code: </h2>
-                            <input class="input search__input" type="text" placeholder="Write your code....">
+                            <input name = "article" value = "{{ searched_article}}" class="input search__input" type="text" placeholder="Write Article code....">
                         </div>
 
                         <div>
-                            <button class="search__btn" style="margin-bottom: 0;" data-aos="fade-left">Search</button>
+                            <button type = "submit" class="search__btn" style="margin-bottom: 0;" data-aos="fade-left">Search</button>
                         </div>
                     </form>
                 </div>
@@ -685,104 +704,41 @@
         <section class="section">
             <div class="container">
                 <h1 class="section__title">Search Result: </h1>
-
+                {%if searched_article %}
+                {%if article == None %}
+                <h3 style="margin-bottom:35px">There is no such result :(</h3>
+                {% else %}
                 <div class="result">
                     <div class="result__block">
                         <div class="result__img">
-                            <img class="img" src="https://via.placeholder.com/250x250" alt="Result IMG">
-                            <div class="result_article">article</div>
+                            <img class="img" src="{{ a_product.image.url }}" alt="Result IMG">
+                            <div >{{a_product.type_name}}</div>
+                            <div class="result_article">{{article.article}}</div>
                         </div>
 
                         <div class="price">
-                            <div class="kzt" data-aos="fade-up"><a>KZT</a></div>
-                            <div class="kzt" data-aos="fade-up" data-aos-delay="100"><a>RUB</a></div>
-                            <div class="kzt" data-aos="fade-up" data-aos-delay="200"><a>USD</a></div>
+                            <div class="kzt" data-aos="fade-up"><a>{{article.price}} KZT</a></div>
+                            <div class="kzt" data-aos="fade-up" data-aos-delay="100"><a>{% widthratio article.price 6 1 %} RUB</a></div>
+                            <div class="kzt" data-aos="fade-up" data-aos-delay="200"><a>{% widthratio article.price 433 1 %} USD</a></div>
                         </div>
 
                         <div class="discription" data-aos="fade-up" data-aos-delay="350">
-                            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                                Amet maxime et nostrum nulla corrupti molestias cupiditate officiis
-                                temporibus? Amet quo adipisci eveniet excepturi pariatur culpa quisquam
-                                eos numquam molestiae eligendi.</p>
+                           XS : <span>{{article.XS}}</span>
                         </div>
-
-                        <div class="dis_btn">
-                            <button class="btn">madin</button>
+                        <div class="discription" data-aos="fade-up" data-aos-delay="350">
+                           S : <span>{{article.S}}</span>
                         </div>
-                    </div>
-
-                    <div class="result__block">
-                        <div class="result__img">
-                            <img class="img" src="https://via.placeholder.com/250x250" alt="Result IMG">
-                            <div class="result_article">article</div>
+                        <div class="discription" data-aos="fade-up" data-aos-delay="350">
+                           L : <span>{{article.L}}</span>
                         </div>
-
-                        <div class="price">
-                            <div class="kzt"><a>KZT</a></div>
-                            <div class="kzt"><a>RUB</a></div>
-                            <div class="kzt"><a>USD</a></div>
+                        <div class="discription" data-aos="fade-up" data-aos-delay="350">
+                           M : <span>{{article.M}}</span>
                         </div>
-
-                        <div class="discription">
-                            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                                Amet maxime et nostrum nulla corrupti molestias cupiditate officiis
-                                temporibus? Amet quo adipisci eveniet excepturi pariatur culpa quisquam
-                                eos numquam molestiae eligendi.</p>
-                        </div>
-
-                        <div class="dis_btn">
-                            <button class="btn">madin</button>
-                        </div>
-                    </div>
-
-                    <div class="result__block">
-                        <div class="result__img">
-                            <img class="img" src="https://via.placeholder.com/250x250" alt="Result IMG">
-                            <div class="result_article">article</div>
-                        </div>
-
-                        <div class="price">
-                            <div class="kzt"><a>KZT</a></div>
-                            <div class="kzt"><a>RUB</a></div>
-                            <div class="kzt"><a>USD</a></div>
-                        </div>
-
-                        <div class="discription">
-                            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                                Amet maxime et nostrum nulla corrupti molestias cupiditate officiis
-                                temporibus? Amet quo adipisci eveniet excepturi pariatur culpa quisquam
-                                eos numquam molestiae eligendi.</p>
-                        </div>
-
-                        <div class="dis_btn">
-                            <button class="btn">madin</button>
-                        </div>
-                    </div>
-
-                    <div class="result__block">
-                        <div class="result__img">
-                            <img class="img" src="https://via.placeholder.com/250x250" alt="Result IMG">
-                            <div class="result_article">article</div>
-                        </div>
-
-                        <div class="price">
-                            <div class="kzt"><a>KZT</a></div>
-                            <div class="kzt"><a>RUB</a></div>
-                            <div class="kzt"><a>USD</a></div>
-                        </div>
-
-                        <div class="discription">
-                            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                                Amet maxime et nostrum nulla corrupti molestias cupiditate officiis
-                                temporibus? Amet quo adipisci eveniet excepturi pariatur culpa quisquam
-                                eos numquam molestiae eligendi.</p>
-                        </div>
-
-                        <div class="dis_btn">
-                            <button class="btn">madin</button>
-                        </div>
+                        <div></div>
                     </div>
                 </div>
+                {% endif %}
+                {% endif %}
             </div>
         </section>
 
